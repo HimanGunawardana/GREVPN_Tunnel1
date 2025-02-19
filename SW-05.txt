@@ -1,0 +1,19 @@
+Switch>ena
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#hostname SW-05
+SW-05(config)#interface range fastEthernet 0/3-24
+SW-05(config-if-range)#shutdown
+
+SW-05(config)#interface fastEthernet 0/1
+SW-05(config-if)#switchport mode access 
+SW-05(config-if)#switchport port-security 
+SW-05(config-if)#switchport port-security mac-address 0001.96A6.AD87
+SW-05(config-if)#exit
+SW-05(config)#
+SW-05(config)#interface fastEthernet 0/2
+SW-05(config-if)#switchport mode access 
+SW-05(config-if)#switchport port-security 
+SW-05(config-if)#switchport port-security mac-address 0010.1167.04D6
+SW-05(config-if)#exit
+SW-05(config)#

@@ -1,0 +1,196 @@
+enable
+configure terminal
+hostname GBR
+interface gigabitEthernet 0/0/0
+description SW-08-Link
+ip address 172.16.2.126 255.255.255.128
+ip helper-address 172.16.0.3
+no shutdown
+exit
+
+interface gigabitEthernet 0/0/1
+description SW-09-Link
+ip address 172.16.0.254 255.255.255.0
+ip helper-address 172.16.0.3
+no shutdown
+exit
+
+interface serial 0/2/0
+description ISP-Link
+ip address 100.100.10.10 255.255.255.252
+no shutdown
+
+ip route 0.0.0.0 0.0.0.0 100.100.10.9
+
+interface tunnel 0
+ip address 172.20.1.10 255.255.255.252
+tunnel source serial 0/2/0
+tunnel destination 100.100.10.6
+no shutdown
+exit	
+
+router rip
+version 2
+passive-interface gigabitEthernet 0/0/0
+passive-interface gigabitEthernet 0/0/1
+network 172.16.2.0
+network 172.16.0.0
+network 172.20.1.0
+no auto-summary 
+exit
+
+interface tunnel 1
+ip address 172.20.1.6 255.255.255.252
+tunnel source serial 0/2/0
+tunnel destination 100.100.10.2
+no shutdown
+exit	
+
+
+
+--------------------------config-------------------------------------
+
+Router>enable
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#hostname GBR
+GBR(config)#interface gigabitEthernet 0/0/0
+GBR(config-if)#description SW-08-Link
+GBR(config-if)#ip address 172.16.2.126 255.255.255.128
+GBR(config-if)#ip helper-address 172.16.0.3
+GBR(config-if)#no shutdown
+
+GBR(config-if)#exit
+GBR(config)#
+GBR(config)#interface gigabitEthernet 0/0/1
+GBR(config-if)#description SW-09-Link
+GBR(config-if)#ip address 172.16.0.254 255.255.255.0
+GBR(config-if)#ip helper-address 172.16.0.3
+GBR(config-if)#no shutdown
+
+GBR(config-if)#exit
+GBR(config)#
+GBR(config)#interface serial 0/2/0
+GBR(config-if)#description ISP-Link
+GBR(config-if)#ip address 100.100.10.10 255.255.255.252
+GBR(config-if)#no shutdown
+
+GBR(config-if)#
+GBR(config-if)#ip route 0.0.0.0 0.0.0.0 100.100.10.9
+GBR(config)#
+GBR(config)#interface tunnel 0
+
+GBR(config-if)#ip address 172.20.1.10 255.255.255.252
+GBR(config-if)#tunnel source serial 0/2/0
+GBR(config-if)#tunnel destination 100.100.10.6
+GBR(config-if)#no shutdown
+GBR(config-if)#exit
+GBR(config-if)#exit 
+GBR(config)#
+GBR(config)#router rip
+GBR(config-router)#version 2
+GBR(config-router)#passive-interface gigabitEthernet 0/0/0
+GBR(config-router)#passive-interface gigabitEthernet 0/0/1
+GBR(config-router)#network 172.16.2.0
+GBR(config-router)#network 172.16.0.0
+GBR(config-router)#network 172.20.1.0
+GBR(config-router)#no auto-summary 
+GBR(config-router)#exit
+
+
+GBR(config)#interface tunnel 1
+
+GBR(config-if)#ip address 172.20.1.6 255.255.255.252
+GBR(config-if)#tunnel source serial 0/2/0
+GBR(config-if)#tunnel destination 100.100.10.2
+GBR(config-if)#no shutdown
+GBR(config-if)#exit
+
+
+11111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+
+GBR(config)#ip route 0.0.0.0 0.0.0.0 100.100.10.9
+GBR(config)#interface tunnel 1
+
+GBR(config-if)#ip address 172.20.1.6 255.255.255.252
+GBR(config-if)#tunnel source serial 0/2/0
+GBR(config-if)#tunnel destination 100.100.10.2
+GBR(config-if)#no shutdown 
+GBR(config-if)#exit
+%LINK-5-CHANGED: Interface Tunnel1, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Tunnel1, changed state to up
+
+GBR(config)#ip route 0.0.0.0 0.0.0.0 100.100.10.9
+GBR(config)#interface tunnel 2
+
+GBR(config-if)#ip address 172.20.1.10 255.255.255.252
+GBR(config-if)#tunnel source serial 0/2/0
+GBR(config-if)#tunnel destination 100.100.10.6
+GBR(config-if)#no shutdown 
+GBR(config-if)#exit
+
+GBR(config)#router rip
+GBR(config-router)#version 2
+GBR(config-router)#passive-interface gigabitEthernet 0/0/0
+GBR(config-router)#passive-interface gigabitEthernet 0/0/1
+GBR(config-router)#network 172.20.1.0
+GBR(config-router)#network 172.20.1.4
+GBR(config-router)#network 172.16.0.0
+GBR(config-router)#network 172.16.2.0
+GBR(config-router)#network 100.100.10.8
+GBR(config-router)#no auto-summary
+GBR(config-router)#exit
+
+GBR(config)#logging host 172.16.0.3
+GBR(config)#logging on
+GBR(config)#logging buffered
+GBR(config)#logging console
+GBR(config)#logging trap
+GBR(config)#logging userinfo
+GBR(config)#
+
+GBR(config)#ntp server 192.168.2.2 
+GBR(config)#ntp server 192.168.2.2 key 1
+GBR(config)#ntp authentication-key 1 md5 Cisco
+GBR(config)#ntp update-calendar
+GBR(config)#ntp trusted-key 1
+GBR(config)#service timestamps log datetime msec
+GBR(config)#
+
+
+GBR(config)#banner motd *
+Enter TEXT message.  End with the character '*'.
+######################################################## 
+  This is a Secure area.Please enter your Authentication. 
+######################################################## *
+
+GBR(config)#
+GBR(config)#enable secret himaN@2024.lk
+GBR(config)#
+GBR(config)#line console 0
+GBR(config-line)#password Himan@2024.lk
+GBR(config-line)#exec-timeout 10
+GBR(config-line)#login
+GBR(config-line)#exit
+GBR(config)#
+GBR(config)#username Admin secret Himan@Ssh.lk
+GBR(config)#ip domain-name yasiru.lk
+GBR(config)#crypto key generate rsa
+The name for the keys will be: GBR.yasiru.lk
+Choose the size of the key modulus in the range of 360 to 4096 for your
+  General Purpose Keys. Choosing a key modulus greater than 512 may take
+  a few minutes.
+
+How many bits in the modulus [512]: 1024
+% Generating 1024 bit RSA keys, keys will be non-exportable...[OK]
+
+GBR(config)#ip ssh version 2
+*Mar 1 1:50:4.772: %SSH-5-ENABLED: SSH 1.99 has been enabled
+GBR(config)#
+GBR(config)#service password-encryption 
+GBR(config)#
+GBR(config)#security passwords min-length 10
+GBR(config)#
+GBR(config)#login block 300 attempts 3 within 60
+GBR(config)#

@@ -1,0 +1,6 @@
+Switch>enable
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#hostname SW-07
+SW-07(config)#interface range fastEthernet 0/3-24
+SW-07(config-if-range)#shutdown

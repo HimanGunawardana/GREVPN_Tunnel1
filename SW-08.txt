@@ -1,0 +1,21 @@
+Switch>enable
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#hostname SW-08
+SW-08(config)#interface range fastEthernet 0/3-24
+SW-08(config-if-range)#shutdown
+
+SW-08#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW-08(config)#interface fastEthernet 0/1
+SW-08(config-if)#switchport mode access 
+SW-08(config-if)#switchport port-security 
+SW-08(config-if)#switchport port-security mac-address 0010.1183.5B76
+SW-08(config-if)#exit
+SW-08(config)#
+SW-08(config)#interface fastEthernet 0/2
+SW-08(config-if)#switchport mode access 
+SW-08(config-if)#switchport port-security 
+SW-08(config-if)#switchport port-security mac-address 0030.F2AB.9C76
+SW-08(config-if)#exit
+SW-08(config)#
